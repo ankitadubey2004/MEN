@@ -19,16 +19,48 @@
 
 //Express.js
 const express = require('express') 
+const morgan = require('morgan')
+
 const app = express()
+
+app.use(morgan('dev'))
 
 app.set('view engine', 'ejs');
 
+// app.use((req,res,next) => {
+//     console.log("this is middleware")
+//     const a = 2
+//     const b = 3
+
+//     console.log(a+b)
+//     return next()
+// })
+
+// app.get('/', 
+//     (req,res,next) => {
+//         const a = 5;
+//         const b = 10;
+//         console.log(a+b)
+
+//         next()
+//     }
+//     , (req,res) => {
+//         res.render('index')
+//     }
+// )
+
+
 app.get('/', (req,res) => {
-    res.send('Hello World')
-}) 
-app.get('/profile', (req,res) => {
     res.render('index')
 }) 
+app.get('/profile', (req,res) => {
+    res.send('Hello people')
+}) 
 
+app.get('/get-form-data', (req,res) => {
+    console.log(req.query) 
+    res.send('data received')
+})
+ 
 app.listen(3000)
 
