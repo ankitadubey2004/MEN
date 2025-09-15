@@ -20,9 +20,9 @@
 //Express.js
 const express = require('express') 
 const morgan = require('morgan')
-
 const app = express()
-
+const dbConnection = require('./config/db')
+const userModel = require('./models/user')
 app.use(morgan('dev'))
 
 app.set('view engine', 'ejs');
@@ -49,6 +49,9 @@ app.set('view engine', 'ejs');
 //     }
 // )
 
+app.use(express.json())
+app.use(express.urlencoded({extended : true}))
+app.use(express.static("public"))
 
 app.get('/', (req,res) => {
     res.render('index')
@@ -57,10 +60,15 @@ app.get('/profile', (req,res) => {
     res.send('Hello people')
 }) 
 
-app.get('/get-form-data', (req,res) => {
-    console.log(req.query) 
+// app.get('/get-form-data', (req,res) => {
+//     console.log(req.query) 
+//     res.send('data received')
+// })
+app.post('/get-form-data', (req,res) => {
+    console.log(req.body) 
     res.send('data received')
 })
+
  
-app.listen(3000)
+app.listen(3000);
 
